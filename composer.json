@@ -1,0 +1,22 @@
+{
+    "name": "krak/doctrine-util",
+    "description": "Doctrine Utilities",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RJ Garcia",
+            "email": "rj@bighead.net"
+        }
+    ],
+    "require-dev": {
+        "peridot-php/peridot": "^1.18",
+        "symfony/var-dumper": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Krak\\DoctrineUtil\\": "src"
+        },
+        "files": ["src/doctrine-util.php"]
+    }
+}
