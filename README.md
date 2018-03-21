@@ -29,6 +29,47 @@ repoUntilEmpty($q, 100, function($users) {
 }, 1000); // run 1000 max
 ```
 
+## EntityRepository
+
+The `Krak\DoctrineUtil\EntityRepository` comes with a few awesome features that making working with the doctrine entity repositories even easier.
+
+
+
+```php
+
+// extend the DoctrineUtil Entity Repository
+class UserRepository extends Krak\DoctrineUtil\EntityRepository
+{
+
+}
+
+// or set the default in the entity manager config
+$em->getConfiguration()->setDefaultRepositoryClassName(Krak\DoctrineUtil\EntityRepository::class);
+```
+
+You can then do the following with your repositories:
+
+```php
+$userRepo = $em->getRepository(User::class);
+
+
+// `get` alias for finding the entity or throw if not found
+try {
+    $user = $userRepo->get($id);
+} catch (Doctrine\ORM\EntityNotFoundException $e) {
+
+}
+
+
+// Simple fluent interface
+
+// find users where ids are in 1,2, and 3
+$users = $userRepo->where(['id' => [1,2,3]])->find();
+
+// retrieve a single user with the state and address entities loaded.
+$user = $userRepo->with(['state', 'address'])->get(1);
+```
+
 ## API
 
 ```
