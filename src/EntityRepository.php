@@ -10,7 +10,7 @@ class EntityRepository extends ORM\EntityRepository
     public function get($id) {
         $entity = $this->find($id);
         if (!$entity) {
-            throw new ORM\EntityNotFoundException($this->getEntityName(), $id);
+            throw new EntityNotFoundException($this->getEntityName(), $id);
         }
         return $entity;
     }
@@ -99,7 +99,7 @@ class EntityRepository extends ORM\EntityRepository
                 $res = $this->find($id);
 
                 if (!$res) {
-                    throw new ORM\EntityNotFoundException($this->className, $id);
+                    throw new EntityNotFoundException($this->className, $id);
                 }
 
                 return $res;
