@@ -74,11 +74,20 @@ class EntityRepository extends ORM\EntityRepository
                 }
 
                 foreach ($entities as $entity) {
-                    $this->qb->leftJoin($this->rootAlias . "." . $entity, $entity);
-                    $this->qb->addSelect($entity);
+                    [$entity, $alias] = $this->formatJoinEntity($entity);
+                    $this->qb->leftJoin($entity, $alias);
+                    $this->qb->addSelect($alias);
                 }
 
                 return $this;
+            }
+
+            private function formatJoinEntity($entity) {
+                if (strpos($entity, ".") === false) {
+                    return [$this->rootAlias . "." . $entity, $entity];
+                }
+
+                return [$entity, str_replace('.', '', $entity)];
             }
 
             public function one($val = true) {
@@ -86,17 +95,17 @@ class EntityRepository extends ORM\EntityRepository
                 return $this;
             }
 
-            public function find($id = null) {
+            public function find($id = null, $field = 'id') {
                 if ($id) {
-                    $this->one()->where(['id' => $id]);
+                    $this->one()->where([$field => $id]);
                 }
 
                 $query = $this->qb->getQuery();
                 return $this->onlyOneResult ? $query->getOneOrNullResult() : $query->getResult();
             }
 
-            public function get($id) {
-                $res = $this->find($id);
+            public function get($id, $field = 'id') {
+                $res = $this->find($id, $field);
 
                 if (!$res) {
                     throw new EntityNotFoundException($this->className, $id);
