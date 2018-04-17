@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Added new EntityRepository for fluent common operations
+
 ## [0.1.0] - 2017-01-11
 
 Initial Commit
